@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<link rel = "stylesheet" href = "button.css" />
+</head>
+
+<header>
+<title> Valve Control</title>
+</header>
+
+<div class="container">
+	<p style="color: #DAF7A6; font-size: 50px">Valve Control</p>
+  <ul>
+  <li>
+    <input type="radio" id="v-open" name="selector">
+    <label for="v-open">Open</label>
+
+    <div class="check"></div>
+  </li>
+
+  <li>
+    <input type="radio" id="v-close" name="selector">
+    <label for="v-close">Close</label>
+
+    <div class="check"><div class="inside"></div></div>
+  </li>
+
+</ul>
+</div>
+
+<!-- including the latest PubNub JavaScript SDK -->
+<script src="http://cdn.pubnub.com/pubnub-3.7.1.min.js"></script>
+<script>
+(function() {
+
+// DOM
+var buttonOn = document.querySelector('#v-open');
+var buttonOff= document.querySelector('#v-close');
+
+
+// This is the channel name you are subscribing in remote-valve.py
+var channel = 'anil';
+
+// Init - Get your own keys at admin.pubnub.com
+var p = PUBNUB.init({
+  subscribe_key: 'sub-c-9ddf7ad2-cfec-11e5-b522-0619f8945a4f',
+  publish_key:   'pub-c-9e022950-208f-49aa-9873-c560add30b41'
+});
+function v-open() {
+p.publish({
+  channel : channel,
+  message : {valve : "OPEN"}
+  });
+}
+
+function v-close() {
+p.publish({
+  channel : channel,
+  message : {valve : "CLOSE"}
+  });
+}
+
+  // Click event
+buttonOn.addEventListener("click",v-open);
+buttonOff.addEventListener("click",v-close)
+document.getElementById("form1").addEventListener("submit",sendValue);
+
+})();
+</script>
+
+</html>
